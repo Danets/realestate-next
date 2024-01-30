@@ -58,7 +58,11 @@ const RegisterModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Header title="Welcome to SmartSpace" subtitle="Create an account!" />
+      <Header
+        center
+        title="Welcome to SmartSpace"
+        subtitle="Create an account!"
+      />
       <Input
         id="name"
         label="Name"
