@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
+import { toast } from "react-hot-toast";
 
 import MenuItem from "./MenuItem";
 import Avatar from "../ui/Avatar";
@@ -9,8 +10,11 @@ import Avatar from "../ui/Avatar";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
+import { SafeUser } from "@/app/types";
+import { signOut } from "next-auth/react";
+
 interface MenuProps {
-  currentUser?: null;
+  currentUser?: SafeUser | null;
 }
 
 const Menu: React.FC<MenuProps> = ({ currentUser }) => {
@@ -81,7 +85,7 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar src={currentUser} />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
@@ -105,7 +109,7 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
               <>
                 <MenuItem label="Real Estate" onClick={() => {}} />
                 <hr />
-                <MenuItem label="Logout" onClick={() => {}} />
+                <MenuItem label="Logout" onClick={() => signOut()} />
               </>
             ) : (
               <>
