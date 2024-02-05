@@ -12,6 +12,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
+import useRentModal from "@/app/hooks/useRentModal";
 
 interface MenuProps {
   currentUser?: SafeUser | null;
@@ -24,10 +25,19 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
 
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const rentModal = useRentModal();
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    rentModal.onOpen();
+  }, [loginModal, rentModal, currentUser]);
 
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
@@ -49,7 +59,7 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
     <div className="relative" ref={menuRef}>
       <div className="flex flex-row items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="
             hidden
             md:block
@@ -107,7 +117,7 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem label="Real Estate" onClick={() => {}} />
+                <MenuItem label="Real Estate" onClick={rentModal.onOpen} />
                 <hr />
                 <MenuItem label="Logout" onClick={() => signOut()} />
               </>
