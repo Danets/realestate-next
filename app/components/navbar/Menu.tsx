@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 import MenuItem from "./MenuItem";
 import Avatar from "../ui/Avatar";
@@ -19,6 +20,8 @@ interface MenuProps {
 }
 
 const Menu: React.FC<MenuProps> = ({ currentUser }) => {
+  const router = useRouter();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
@@ -117,6 +120,18 @@ const Menu: React.FC<MenuProps> = ({ currentUser }) => {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
+                <MenuItem
+                  label="My trips"
+                  onClick={() => router.push("/trips")}
+                />
+                <MenuItem
+                  label="My favorites"
+                  onClick={() => router.push("/favorites")}
+                />
+                <MenuItem
+                  label="My reservations"
+                  onClick={() => router.push("/reservations")}
+                />
                 <MenuItem label="Real Estate" onClick={rentModal.onOpen} />
                 <hr />
                 <MenuItem label="Logout" onClick={() => signOut()} />
