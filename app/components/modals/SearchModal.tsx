@@ -43,7 +43,7 @@ const SearchModal = () => {
       dynamic(() => import("../ui/Map"), {
         ssr: false,
       }),
-    [location]
+    []
   );
 
   const onBack = useCallback(() => {
